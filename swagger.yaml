@@ -1,0 +1,28 @@
+openapi: 3.0.1
+info:
+  title: simple-qna-api
+  description: A plugin that answers a question.
+  version: 0.1.0
+servers:
+  - url: https://simple-qna-api.azurewebsites.net/question
+paths:
+  /:
+    get:
+      operationId: getAnswer
+      summary: Returns a description based on the title keyword in the query
+      description: Gets the answer to the question from the API by filtering title out.
+      parameters:
+        - name: title
+          in: query
+          description: title of query like Oil change, Brake repairs.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK 
+          content:
+            application/json:
+              schema:
+                type: string
+                
