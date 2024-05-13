@@ -1,21 +1,38 @@
 openapi: 3.0.1
 info:
-  title: simple-qna-api
-  description: A plugin that answers a question.
+  title: VerbatimResponse
+  description: A plugin that gives a particular response if the user utterance has sensitive keywords or estimates the home nation of a space program based on a name.
   version: 0.1.0
 servers:
-  - url: https://simple-qna-api.azurewebsites.net/question
+  - url: https://simple-qna-api.azurewebsites.net/
 paths:
-  /:
+  /response/:
+      get:
+        operationId: getResponse
+        description: Gets the fixed response string regarding contacting AskHR for the sensitive keyword from user utterance.
+        parameters:
+          - name: keyword
+            in: query
+            description: The sensitive keyword in user utterance
+            required: false
+            schema:
+              type: string
+        responses:
+          '200':
+            description: OK 
+            content:
+              application/json:
+                schema:
+                  type: string
+  /name/:
     get:
-      operationId: getAnswer
-      summary: Returns a description based on the title keyword in the query
-      description: Gets the answer to the question from the API by filtering title out.
+      operationId: getInfo
+      description: Gets the probable nation given the program's name.
       parameters:
-        - name: title
+        - name: name
           in: query
-          description: title of query like Oil change, Brake repairs.
-          required: true
+          description: The name of the program
+          required: false
           schema:
             type: string
       responses:
@@ -25,4 +42,3 @@ paths:
             application/json:
               schema:
                 type: string
-                
